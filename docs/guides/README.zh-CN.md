@@ -8,7 +8,7 @@
 
 **来源：** pstack 与 `/poteto-mode` 原作者为 **[poteto](https://x.com/poteto)**（Lauren Tan）。原文：[How I Use Cursor](https://x.com/poteto/status/2058975157503570132?s=20)
 
-**命令参考：** [docs/COMMANDS.md](../COMMANDS.md)
+**命令参考（安装 + 斜杠命令 + 示例）：** [COMMANDS.zh-CN.md](COMMANDS.zh-CN.md) · [COMMANDS.md](../COMMANDS.md) (EN)
 
 ---
 
@@ -128,21 +128,7 @@ export PISTACK_SKILLS_DIR=/path/to/pstack/skills
 
 ## 命令
 
-| pi 命令 | 用途 |
-|---------|------|
-| `/poteto-mode` | 默认入口 — 严谨 playbook（bug fix、feature、perf 等） |
-| `/how` | 子系统 walkthrough |
-| `/why` | 历史与 rationale（可用 MCP 时） |
-| `/tdd` | 先写失败测试，再 fix |
-| `/architect` | 跨模块边界设计 |
-| `/interrogate` | 多模型 adversarial review |
-| `/arena` | 并行尝试，best-of 合并 |
-| `/unslop` | 去除 AI 文风 |
-| `/figure-it-out` | 自定义严谨 playbook |
-| `/show-me-your-work` | decision trail（TSV） |
-| `/automate-me` | 生成个人 `-mode` skill |
-| `/reflect` | 将经验写入 skill |
-| `/pistack` | 列出命令与 skills 路径 |
+详细说明与示例：**[COMMANDS.zh-CN.md](COMMANDS.zh-CN.md)**
 
 Principle skills：未被全局 skill 覆盖时使用 `/skill:principle-<name>`
 

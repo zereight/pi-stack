@@ -26,6 +26,7 @@ pi-stack ports those workflows to pi. Skill content is fetched from upstream [ps
 |----------|---------|
 | [docs/COMMANDS.md](docs/COMMANDS.md) | Install commands, env vars, slash commands with examples (EN) |
 | [docs/guides/COMMANDS.ko.md](docs/guides/COMMANDS.ko.md) | Same, in Korean |
+| [docs/guides/COMMANDS.zh-CN.md](docs/guides/COMMANDS.zh-CN.md) | Same, in Chinese |
 
 ## Quick start (one command)
 
