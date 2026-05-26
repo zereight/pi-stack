@@ -16,18 +16,25 @@ Skill content stays upstream MIT pstack. This repo only wires paths and slash co
 ## Prerequisites
 
 - [pi](https://pi.dev/) with extension support
-- pstack skill files from Cursor plugin cache or `PISTACK_SKILLS_DIR`
+- git + network on first skills sync (or set `PISTACK_SKILLS_DIR`)
+
+**Command reference:** [docs/COMMANDS.md](../../docs/COMMANDS.md) · [한국어](../../docs/guides/COMMANDS.ko.md)
 
 ## Quick install
 
-**With pi package manager (recommended):**
+**One command:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zereight/pi-stack/main/scripts/bootstrap.sh | bash
+```
+
+**With pi package manager:**
 
 ```bash
 pi install git:github.com/zereight/pi-stack@main
-bash ~/.pi/agent/git/github.com/zereight/pi-stack/scripts/sync-pistack-skills.sh
 ```
 
-Project-local: `pi install -l git:github.com/zereight/pi-stack@main`
+Skills sync runs automatically via `postinstall`. No Cursor IDE required.
 
 **With install script:**
 
@@ -48,9 +55,7 @@ Restart pi, then run `/pistack` to confirm the skills path.
 ./scripts/sync-pistack-skills.sh
 ```
 
-Symlinks `extensions/pistack/skills` → latest Cursor pstack plugin cache (`~/.cursor/plugins/cache/cursor-public/pstack/<version>/skills`).
-
-Requires pstack installed in Cursor once (`/add-plugin pstack`) so the cache exists.
+Symlinks `extensions/pistack/skills` → `~/.pi/agent/cache/pstack-plugins/pstack/skills` (sparse clone from [cursor/plugins](https://github.com/cursor/plugins)).
 
 Override source:
 

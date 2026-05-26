@@ -1,6 +1,6 @@
 {
   "name": "@zereight/pi-stack",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "pstack workflows for pi — pistack extension (/poteto-mode, /how, /tdd, …)",
   "type": "module",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "url": "https://github.com/zereight/pi-stack.git"
   },
   "scripts": {
-    "postinstall": "bash scripts/sync-pistack-skills.sh || true"
+    "postinstall": "bash scripts/sync-pistack-skills.sh"
   },
   "pi": {
     "extensions": ["./extensions/pistack/index.ts"]

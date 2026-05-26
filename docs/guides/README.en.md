@@ -4,24 +4,33 @@
 
 Use `/poteto-mode`, `/how`, `/tdd`, and the rest of poteto's rigorous engineering skills from pi without copying skill files by hand.
 
-This repo ships the extension and install scripts. Skill content stays upstream MIT pstack (Cursor plugin cache or your own checkout).
+This repo ships the extension and install scripts. Skill content is fetched from upstream [pstack](https://github.com/cursor/plugins/tree/main/pstack) via `scripts/sync-pistack-skills.sh`. **Cursor IDE is not required.**
 
 **Origin:** pstack and `/poteto-mode` are by **[poteto](https://x.com/poteto)** (Lauren Tan). Original article: [How I Use Cursor](https://x.com/poteto/status/2058975157503570132?s=20)
+
+**Command reference (install + slash commands with examples):** [docs/COMMANDS.md](../COMMANDS.md)
 
 ---
 
 ## Prerequisites
 
 1. **[pi](https://pi.dev/)** with extension support
-2. **Cursor pstack cached once** — run `/add-plugin pstack` in Cursor so skill files exist at:
-   `~/.cursor/plugins/cache/cursor-public/pstack/<version>/skills`
+2. **git** and **network** on first skills sync (or set `PISTACK_SOURCE_SKILLS`)
 3. **`enableSkillCommands: true`** in `~/.pi/agent/settings.json` (or project `.pi/settings.json`)
 
 ---
 
 ## Install
 
-### Option A: `pi install` (recommended)
+### One command (recommended)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zereight/pi-stack/main/scripts/bootstrap.sh | bash
+```
+
+Installs pi package + fetches pstack skills. No Cursor IDE.
+
+### Option A: `pi install`
 
 **Global** (all projects):
 
@@ -80,7 +89,9 @@ ln -sf /path/to/pi-stack/extensions/pistack .pi/extensions/pistack
 
 ## Sync pstack skills
 
-Skill files are **not** vendored in git. After install, sync once:
+Skill files are **not** vendored in git. `pi install` runs `postinstall`, which calls `sync-pistack-skills.sh` automatically.
+
+Manual re-sync:
 
 ```bash
 # git install path:
@@ -90,7 +101,7 @@ bash ~/.pi/agent/git/github.com/zereight/pi-stack/scripts/sync-pistack-skills.sh
 ./scripts/sync-pistack-skills.sh
 ```
 
-`package.json` `postinstall` runs this automatically when the Cursor pstack cache exists.
+Skills are sparse-cloned from [cursor/plugins](https://github.com/cursor/plugins) into `~/.pi/agent/cache/pstack-plugins/pstack/skills`.
 
 **Overrides:**
 
@@ -123,6 +134,8 @@ Example task:
 ---
 
 ## Commands
+
+See **[docs/COMMANDS.md](../COMMANDS.md)** for full install commands, environment variables, and every slash command with examples.
 
 | pi command | Purpose |
 |------------|---------|
@@ -171,7 +184,7 @@ pistack extension (extensions/pistack/index.ts)
         ├─ reads pstack SKILL.md from:
         │    extensions/pistack/skills  (symlink)
         │    PISTACK_SKILLS_DIR
-        │    ~/.cursor/plugins/cache/cursor-public/pstack/.../skills
+        │    ~/.pi/agent/cache/pstack-plugins/pstack/skills
         │
         └─ injects skill block as user message → agent runs playbook
 ```
@@ -182,10 +195,10 @@ pistack extension (extensions/pistack/index.ts)
 
 | Problem | Fix |
 |---------|-----|
-| `pistack: no skills dir` | Run `./scripts/sync-pistack-skills.sh` after `/add-plugin pstack` in Cursor |
+| `pistack: no skills dir` | Run `./scripts/sync-pistack-skills.sh` (needs git + network first time) |
 | Slash commands missing | Check `enableSkillCommands: true`; restart pi or `/reload` |
 | Skill name collision | Global `~/.pi/agent/skills/<name>` shadows pstack. pistack `/tdd` still injects pstack inline |
-| `pi install` works but no skills | Run sync script manually; cache may not exist yet |
+| `pi install` works but no skills | Run sync manually; check git/network or set `PISTACK_SOURCE_SKILLS` |
 
 ---
 

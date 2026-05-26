@@ -4,24 +4,31 @@
 
 无需手动复制 skill 文件，即可在 pi 中使用 `/poteto-mode`、`/how`、`/tdd` 等 poteto 的严谨工程 skill。
 
-本仓库只提供扩展和安装脚本。skill 内容仍来自 upstream MIT pstack（Cursor 插件缓存或自行 checkout）。
+本仓库只提供扩展和安装脚本。skill 从 upstream [pstack](https://github.com/cursor/plugins/tree/main/pstack) 经 `sync-pistack-skills.sh` 获取。**无需 Cursor IDE。**
 
 **来源：** pstack 与 `/poteto-mode` 原作者为 **[poteto](https://x.com/poteto)**（Lauren Tan）。原文：[How I Use Cursor](https://x.com/poteto/status/2058975157503570132?s=20)
+
+**命令参考：** [docs/COMMANDS.md](../COMMANDS.md)
 
 ---
 
 ## 前置条件
 
 1. 支持扩展的 **[pi](https://pi.dev/)**
-2. **Cursor pstack 缓存** — 在 Cursor 中执行一次 `/add-plugin pstack`
-   - 路径：`~/.cursor/plugins/cache/cursor-public/pstack/<version>/skills`
+2. **git + 网络**（首次 skill sync，或设置 `PISTACK_SOURCE_SKILLS`）
 3. **`enableSkillCommands: true`** — 写入 `~/.pi/agent/settings.json` 或项目 `.pi/settings.json`
 
 ---
 
 ## 安装
 
-### 方式 A：`pi install`（推荐）
+### 一行安装（推荐）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zereight/pi-stack/main/scripts/bootstrap.sh | bash
+```
+
+### 方式 A：`pi install`
 
 **全局**（所有项目）：
 
@@ -90,7 +97,7 @@ bash ~/.pi/agent/git/github.com/zereight/pi-stack/scripts/sync-pistack-skills.sh
 ./scripts/sync-pistack-skills.sh
 ```
 
-若 Cursor pstack 缓存存在，`package.json` 的 `postinstall` 会自动运行。
+skill 文件**不包含在 git 中**。`pi install` 的 `postinstall` 会自动运行 `sync-pistack-skills.sh`。
 
 **路径 override：**
 
@@ -166,7 +173,7 @@ pistack 扩展 (extensions/pistack/index.ts)
         ├─ 读取 pstack SKILL.md：
         │    extensions/pistack/skills  (symlink)
         │    PISTACK_SKILLS_DIR
-        │    ~/.cursor/plugins/cache/cursor-public/pstack/.../skills
+        │    ~/.pi/agent/cache/pstack-plugins/pstack/skills
         │
         └─ 将 skill 块注入为 user message → agent 执行 playbook
 ```
@@ -177,7 +184,7 @@ pistack 扩展 (extensions/pistack/index.ts)
 
 | 问题 | 处理 |
 |------|------|
-| `pistack: no skills dir` | 在 Cursor 中 `/add-plugin pstack` 后运行 `./scripts/sync-pistack-skills.sh` |
+| `pistack: no skills dir` | 运行 `./scripts/sync-pistack-skills.sh`（首次需 git + 网络） |
 | 缺少斜杠命令 | 确认 `enableSkillCommands: true`；重启 pi 或 `/reload` |
 | skill 名称冲突 | 全局 `~/.pi/agent/skills/<name>` 覆盖 pstack。pistack `/tdd` 仍通过 inline 注入使用 pstack |
 | `pi install` 后无 skills | 手动运行 sync；缓存可能尚未存在 |

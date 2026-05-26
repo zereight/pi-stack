@@ -4,24 +4,33 @@
 
 스킬 파일을 수동으로 복사하지 않고 `/poteto-mode`, `/how`, `/tdd` 등 poteto의 엄밀한 엔지니어링 스킬을 pi에서 바로 쓸 수 있습니다.
 
-이 레포는 확장과 설치 스크립트만 제공합니다. 스킬 본문은 upstream MIT pstack(Cursor 플러그인 캐시 또는 직접 checkout)에 있습니다.
+이 레포는 확장과 설치 스크립트만 제공합니다. 스킬 본문은 upstream [pstack](https://github.com/cursor/plugins/tree/main/pstack)에서 `sync-pistack-skills.sh`로 가져옵니다. **Cursor IDE는 필요 없습니다.**
 
 **출처:** pstack과 `/poteto-mode`의 원작자는 **[poteto](https://x.com/poteto)** (Lauren Tan)입니다. 원문: [How I Use Cursor](https://x.com/poteto/status/2058975157503570132?s=20)
+
+**명령어 레퍼런스 (설치 + 슬래시 명령 + 예시):** [COMMANDS.ko.md](COMMANDS.ko.md) · [COMMANDS.md](../COMMANDS.md) (EN)
 
 ---
 
 ## 사전 준비
 
 1. **확장 지원 [pi](https://pi.dev/)**
-2. **Cursor pstack 캐시** — Cursor에서 `/add-plugin pstack`을 한 번 실행
-   - 경로: `~/.cursor/plugins/cache/cursor-public/pstack/<version>/skills`
+2. **git + network** (최초 skill sync 시, 또는 `PISTACK_SOURCE_SKILLS` 설정)
 3. **`enableSkillCommands: true`** — `~/.pi/agent/settings.json` 또는 프로젝트 `.pi/settings.json`
 
 ---
 
 ## 설치
 
-### 방법 A: `pi install` (권장)
+### 한 줄 설치 (권장)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zereight/pi-stack/main/scripts/bootstrap.sh | bash
+```
+
+pi 패키지 + skill fetch를 한 번에 처리합니다.
+
+### 방법 A: `pi install`
 
 **전역** (모든 프로젝트):
 
@@ -80,7 +89,7 @@ ln -sf /path/to/pi-stack/extensions/pistack .pi/extensions/pistack
 
 ## pstack 스킬 동기화
 
-스킬 파일은 **git에 포함되지 않습니다**. 설치 후 한 번 sync하세요.
+스킬 파일은 **git에 포함되지 않습니다**. `pi install` 시 `postinstall`이 `sync-pistack-skills.sh`를 자동 실행합니다.
 
 ```bash
 # git install 경로:
@@ -90,7 +99,7 @@ bash ~/.pi/agent/git/github.com/zereight/pi-stack/scripts/sync-pistack-skills.sh
 ./scripts/sync-pistack-skills.sh
 ```
 
-Cursor pstack 캐시가 있으면 `package.json` `postinstall`이 자동 실행합니다.
+[cursor/plugins](https://github.com/cursor/plugins)에서 sparse clone → `~/.pi/agent/cache/pstack-plugins/pstack/skills`
 
 **경로 override:**
 
@@ -120,6 +129,8 @@ skills 경로와 워크플로 명령 목록이 보이면 성공입니다.
 ---
 
 ## 명령어
+
+상세 설명과 예시: **[COMMANDS.ko.md](COMMANDS.ko.md)**
 
 | pi 명령 | 용도 |
 |---------|------|
@@ -166,7 +177,7 @@ pistack 확장 (extensions/pistack/index.ts)
         ├─ pstack SKILL.md 읽기:
         │    extensions/pistack/skills  (symlink)
         │    PISTACK_SKILLS_DIR
-        │    ~/.cursor/plugins/cache/cursor-public/pstack/.../skills
+        │    ~/.pi/agent/cache/pstack-plugins/pstack/skills
         │
         └─ skill 블록을 user message로 주입 → agent가 playbook 실행
 ```
@@ -177,10 +188,10 @@ pistack 확장 (extensions/pistack/index.ts)
 
 | 증상 | 해결 |
 |------|------|
-| `pistack: no skills dir` | Cursor에서 `/add-plugin pstack` 후 `./scripts/sync-pistack-skills.sh` |
+| `pistack: no skills dir` | `./scripts/sync-pistack-skills.sh` 실행 (최초 1회 git + network 필요) |
 | 슬래시 명령 없음 | `enableSkillCommands: true` 확인, pi 재시작 또는 `/reload` |
 | 스킬 이름 충돌 | `~/.pi/agent/skills/<name>`이 pstack을 가림. pistack `/tdd`는 inline 주입으로 pstack 사용 |
-| `pi install` 후 skills 없음 | sync 스크립트 수동 실행. 캐시가 아직 없을 수 있음 |
+| `pi install` 후 skills 없음 | sync 수동 실행. git/network 확인 또는 `PISTACK_SOURCE_SKILLS` 설정 |
 
 ---
 

@@ -5,7 +5,7 @@
  * - resources_discover exposes only skills not already in ~/.pi/agent/skills or ~/.agents/skills
  *
  * Skills directory: extensions/pistack/skills (run scripts/sync-pistack-skills.sh)
- * or PISTACK_SKILLS_DIR, or latest Cursor pstack plugin cache (pstack/<hash>/skills)
+ * or PISTACK_SKILLS_DIR, or ~/.pi/agent/cache/pstack-plugins/pstack/skills
  */
 
 import {
@@ -96,27 +96,14 @@ function directoryHasSkillMarkdown(dir: string): boolean {
 	return existsSync(join(dir, "how", "SKILL.md"));
 }
 
-function resolveCursorPstackCacheSkillsDir(): string | null {
-	const cacheRoot = join(
+function resolveAgentCacheSkillsDir(): string | null {
+	const skillsDir = join(
 		homedir(),
-		".cursor/plugins/cache/cursor-public/pstack",
+		".pi/agent/cache/pstack-plugins/pstack/skills",
 	);
-	if (!existsSync(cacheRoot)) {
-		return null;
+	if (directoryHasSkillMarkdown(skillsDir)) {
+		return skillsDir;
 	}
-
-	const versions = readdirSync(cacheRoot, { withFileTypes: true })
-		.filter((entry) => entry.isDirectory())
-		.map((entry) => entry.name)
-		.sort();
-
-	for (let index = versions.length - 1; index >= 0; index -= 1) {
-		const skillsDir = join(cacheRoot, versions[index]!, "skills");
-		if (directoryHasSkillMarkdown(skillsDir)) {
-			return skillsDir;
-		}
-	}
-
 	return null;
 }
 
@@ -131,7 +118,7 @@ export function resolvePistackSkillsDir(): string | null {
 		return bundled;
 	}
 
-	return resolveCursorPstackCacheSkillsDir();
+	return resolveAgentCacheSkillsDir();
 }
 
 function collectGlobalSkillNames(): Set<string> {

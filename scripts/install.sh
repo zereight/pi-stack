@@ -13,7 +13,7 @@ Usage: ./scripts/install.sh [options]
 Install pistack into ~/.pi/agent/extensions/pistack and sync pstack skills.
 
 Options:
-  --skip-skills   Do not run sync-pistack-skills.sh (use PISTACK_SKILLS_DIR or cache fallback)
+  --skip-skills   Do not run sync-pistack-skills.sh (use PISTACK_SKILLS_DIR or agent cache)
   -h, --help      Show this help
 EOF
 }
