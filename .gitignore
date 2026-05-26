@@ -1,0 +1,13 @@
+# pistack: symlinked from Cursor pstack cache (scripts/sync-pistack-skills.sh)
+extensions/pistack/skills
+extensions/pistack/.skills-discover-cache
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+*.pem
