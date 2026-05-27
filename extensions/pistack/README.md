@@ -11,14 +11,12 @@ Skill content stays upstream MIT pstack. This repo only wires paths and slash co
 
 **Origin:** [poteto](https://x.com/poteto) (Lauren Tan) created pstack and `/poteto-mode`. [How I Use Cursor](https://x.com/poteto/status/2058975157503570132?s=20)
 
-**Full guides:** [English](../../docs/guides/README.en.md) · [한국어](../../docs/guides/README.ko.md) · [简体中文](../../docs/guides/README.zh-CN.md)
+**Full guides (install + commands + examples):** [English](../../docs/guides/README.en.md) · [한국어](../../docs/guides/README.ko.md) · [简体中文](../../docs/guides/README.zh-CN.md)
 
 ## Prerequisites
 
 - [pi](https://pi.dev/) with extension support
 - git + network on first skills sync (or set `PISTACK_SKILLS_DIR`)
-
-**Command reference:** [docs/COMMANDS.md](../../docs/COMMANDS.md) · [한국어](../../docs/guides/COMMANDS.ko.md)
 
 ## Quick install
 

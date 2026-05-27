@@ -14,19 +14,13 @@ pi-stack ports those workflows to pi. Skill content is fetched from upstream [ps
 
 ## Guides
 
+Each guide covers install, shell commands, environment variables, pi slash commands, troubleshooting, and architecture.
+
 | Language | Document |
 |----------|----------|
 | English | [docs/guides/README.en.md](docs/guides/README.en.md) |
 | 한국어 | [docs/guides/README.ko.md](docs/guides/README.ko.md) |
 | 简体中文 | [docs/guides/README.zh-CN.md](docs/guides/README.zh-CN.md) |
-
-## Command reference
-
-| Document | Content |
-|----------|---------|
-| [docs/COMMANDS.md](docs/COMMANDS.md) | Install commands, env vars, slash commands with examples (EN) |
-| [docs/guides/COMMANDS.ko.md](docs/guides/COMMANDS.ko.md) | Same, in Korean |
-| [docs/guides/COMMANDS.zh-CN.md](docs/guides/COMMANDS.zh-CN.md) | Same, in Chinese |
 
 ## Quick start (one command)
 
@@ -49,7 +43,7 @@ Restart pi, then:
 /poteto-mode build a small feature behind a flag. verify it really works.
 ```
 
-See [docs/COMMANDS.md](docs/COMMANDS.md) for every command and example.
+See the [English guide](docs/guides/README.en.md) for every command and example.
 
 ## Maintainers
 
@@ -63,10 +57,9 @@ See [docs/COMMANDS.md](docs/COMMANDS.md) for every command and example.
 ```text
 pi-stack/
 ├── docs/
-│   ├── COMMANDS.md       # command reference (EN)
 │   ├── DEPLOYMENT.md
 │   ├── CONTRIBUTING.md
-│   └── guides/           # EN / KO / ZH-CN user guides
+│   └── guides/           # EN / KO / ZH-CN user guides (one doc per language)
 ├── extensions/pistack/
 ├── scripts/
 │   ├── bootstrap.sh      # one-shot install
